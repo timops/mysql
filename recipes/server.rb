@@ -201,6 +201,7 @@ if platform_family?('rhel')
   execute "assign-root-password" do
     command %Q["#{node['mysql']['mysqladmin_bin']}" -u root password '#{node['mysql']['server_root_password']}']
     action :run
+    ignore_failure true
     #only_if %Q["#{node['mysql']['mysql_bin']}" -u root -e 'show databases;']
   end
 end
