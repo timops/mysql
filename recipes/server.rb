@@ -91,6 +91,8 @@ if platform_family?('windows')
 end
 
 # Need to create user before chown'ing files and dirs in case of first run
+# nah!
+=begin
 unless platform_family?(%w{windows})
 
   group "mysql" do
@@ -106,6 +108,7 @@ unless platform_family?(%w{windows})
   end
 
 end
+=end
 
 unless platform_family?(%w{mac_os_x})
 
@@ -197,14 +200,14 @@ end
 
 # set the root password for situations that don't support pre-seeding.
 # (eg. platforms other than debian/ubuntu & drop-in mysql replacements)
-if platform_family?('rhel')
+#if platform_family?('rhel')
   execute "assign-root-password" do
     command %Q["#{node['mysql']['mysqladmin_bin']}" -u root password '#{node['mysql']['server_root_password']}']
     action :run
     ignore_failure true
     #only_if %Q["#{node['mysql']['mysql_bin']}" -u root -e 'show databases;']
   end
-end
+#end
 
 unless platform_family?(%w{mac_os_x})
   grants_path = node['mysql']['grants_path']
